@@ -8,12 +8,31 @@ class App extends Component {
     text:sampleText
   }
 
+  componentDidMount (){
+    const text = localStorage.getItem('text')
+
+    if(text){
+      this.setState({ text })
+    }else {
+      this.setState({text: sampleText})
+    }
+    
+    
+  }
+  componentDidUpdate () {
+    const { text } = this.state
+    localStorage.setItem('text', text)
+  }
+
   handelChange = event => {
     const text = event.target.value
     this.setState({ text })
   }
 
-  renderText = text => marked(text, { sanitize: true })
+  renderText = text =>{
+    const __html = marked(text, { sanitize: true })
+    return { __html }
+  } 
 
   render(){
     return (
@@ -27,12 +46,9 @@ class App extends Component {
             className='form-control'/>
           </div>
           <div className='col-sm-6'>
-            <div dangerouslySetInnerHTML={{ __html: this.renderText(this.state.text) }} />
+            <div dangerouslySetInnerHTML={ this.renderText(this.state.text) } />
           </div>
         </div>
-        
-          
-        
       </div>  
     
       
