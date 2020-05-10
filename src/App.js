@@ -16,8 +16,6 @@ class App extends Component {
     }else {
       this.setState({text: sampleText})
     }
-    
-    
   }
   componentDidUpdate () {
     const { text } = this.state
